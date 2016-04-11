@@ -102,6 +102,7 @@ class AttributeSubscriber implements EventSubscriberInterface
             }
 
             $type = 'choice';
+            $params['choice_translation_domain'] = false;
         } elseif (is_array($value)) {
             $value = null;
         }
