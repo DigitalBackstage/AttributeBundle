@@ -378,4 +378,11 @@ class Definition
             self::TYPE_RADIO,
         ));
     }
+
+    public function getOptionValues()
+    {
+        return $this->getOptions()->map(function ($element) {
+            return $element->getValue();
+        })->toArray();
+    }
 }
