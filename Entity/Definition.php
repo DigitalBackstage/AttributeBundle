@@ -10,6 +10,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Definition
 {
+    const TYPE_TEXT = 'text';
+    const TYPE_TEXTAREA = 'textarea';
+    const TYPE_CHOICE = 'choice';
+    const TYPE_CHECKBOX = 'checkbox';
+    const TYPE_RADIO = 'radio';
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -362,5 +368,14 @@ class Definition
         $this->visibleInExport = $value;
 
         return $this;
+    }
+
+    public function isChoice()
+    {
+        return in_array($this->getType(), array(
+            self::TYPE_CHOICE,
+            self::TYPE_CHECKBOX,
+            self::TYPE_RADIO,
+        ));
     }
 }

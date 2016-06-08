@@ -1,10 +1,11 @@
 <?php
 namespace Padam87\AttributeBundle\Form\EventListener;
 
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormFactoryInterface;
+use Padam87\AttributeBundle\Entity\Definition;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormFactoryInterface;
 
 class AttributeSubscriber implements EventSubscriberInterface
 {
@@ -70,21 +71,22 @@ class AttributeSubscriber implements EventSubscriberInterface
             'attr' => $form->getConfig()->getOptions()['attr']
         );
 
-        if ($type == 'textarea' && !$this->getOption('allow_expanded')) {
+        if ($type == Definition::TYPE_TEXTAREA && !$this->getOption('allow_expanded')) {
             $type = 'text';
         }
 
-        if ($type == 'choice' || $type == 'checkbox' || $type == 'radio') {
-            if (($type == 'checkbox' || $type == 'radio') && $this->getOption('allow_expanded')) {
+        if ($definition->isChoice()) {
+            if (($type == Definition::TYPE_CHECKBOX || $type == Definition::TYPE_RADIO)
+                && $this->getOption('allow_expanded')) {
                 $params['expanded'] = true;
             }
 
             if ($this->getOption('all_multiple')) {
                 $params['multiple'] = true;
             } else {
-                if ($type == 'radio') {
+                if ($type == Definition::TYPE_RADIO) {
                     $params['multiple'] = false;
-                } elseif ($type == 'checkbox') {
+                } elseif ($type == Definition::TYPE_CHECKBOX) {
                     if (!is_array($value)) {
                         $value = array(
                             $value => $value

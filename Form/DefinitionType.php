@@ -2,8 +2,9 @@
 
 namespace Padam87\AttributeBundle\Form;
 
-use Symfony\Component\Form\FormBuilderInterface;
+use Padam87\AttributeBundle\Entity\Definition;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class DefinitionType extends AbstractType
@@ -17,11 +18,11 @@ class DefinitionType extends AbstractType
         ));
         $builder->add('type', 'choice', array(
             'choices' => array(
-                'text'      => 'Text',
-                'textarea'  => 'Textarea',
-                'choice'    => 'Select',
-                'checkbox'  => 'Checkbox',
-                'radio'     => 'Radio'
+                Definition::TYPE_TEXT => 'Text',
+                Definition::TYPE_TEXTAREA => 'Textarea',
+                Definition::TYPE_CHOICE => 'Select',
+                Definition::TYPE_CHECKBOX => 'Checkbox',
+                Definition::TYPE_RADIO => 'Radio'
             )
         ));
         $builder->add('options', 'collection', array(
